@@ -23,6 +23,11 @@ data_precehck.ipynb
 2-1. Extreme cold situation
 - executed by data_split_rnd.py : very high cold ratio in test
 
+3. Text Embedding Generation
+- nomic-embed-text:v1.5 by calling API KEY
+- output: aigs/NTS/data/Home_and_Kitchen/itm_txt_emb/itm_txt_emb_home.pkl
+- Item index order matched to item2id.txt
+
 [Experiment : Comparison Model]
 - LightGCN (SIGIR, 2020)
 from https://github.com/gusye1234/LightGCN-PyTorch
