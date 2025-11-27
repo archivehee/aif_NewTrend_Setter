@@ -1,0 +1,20 @@
+name: NTS
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch=2.3.1
+  - torchvision=0.18.1
+  - torchaudio=2.3.1
+  - pytorch-cuda=12.1
+  - numpy=1.26
+  - scipy=1.11
+  - pip
+  - pandas
+  - tensorboardX
+  - pip:
+      - tqdm==4.66.4
+      - scikit-learn==1.3.2

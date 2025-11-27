@@ -1,0 +1,13 @@
+{
+  "users": 5000,
+  "items_per_domain": {
+    "Home_and_Kitchen": 35405
+  },
+  "splits": {
+    "Home_and_Kitchen": {
+      "train": 27407,
+      "valid": 5000,
+      "test": 5000
+    }
+  }
+}

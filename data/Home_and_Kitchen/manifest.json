@@ -1,0 +1,24 @@
+{
+  "users": 5000,
+  "items_per_domain": {
+    "Home_and_Kitchen": 29284
+  },
+  "splits": {
+    "Home_and_Kitchen": {
+      "train": 33304,
+      "valid": 2036,
+      "test": 1949
+    }
+  },
+  "meta_filtered": {
+    "required_fields": [
+      "main_category",
+      "categories",
+      "title",
+      "description"
+    ],
+    "min_interactions": 5,
+    "target_users": 5000,
+    "eval_cold_removed": true
+  }
+}
