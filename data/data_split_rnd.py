@@ -7,7 +7,7 @@ from pathlib import Path
 
 DOMAIN = "Home_and_Kitchen"
 TARGET_USERS = 5000
-MIN_INTERACTIONS = 5  # after meta filtering
+MIN_INTERACTIONS = 5  
 
 BASE_DIR = Path("/home/heek/edda_backbone/preprocess_raw/amazon/23")
 REVIEW_DIR = BASE_DIR / "user_reviews/5_core"
@@ -132,16 +132,10 @@ def main():
     DATA_ROOT.mkdir(parents=True, exist_ok=True)
     MAP_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 1. valid items by meta
     valid_items = load_valid_items()
-
-    # 2. interactions filtered by valid items
     interactions_all, item_freq = collect_user_interactions(valid_items)
 
-    # 3. choose users
     selected_users = choose_users(interactions_all)
-
-    # 4. gather items for selected users
     selected_items = set()
     for u in selected_users:
         for ts, item in interactions_all[u]:
@@ -151,7 +145,7 @@ def main():
 
     print(f"[{DOMAIN}] items: {len(item2id)}, users: {len(user2id)}")
 
-    # 5. build train/valid/test with leave-one-out
+    # build train/valid/test with leave-one-out
     train_pairs = []
     eval_candidates = []  # (uid, valid_iid, test_iid)
 
@@ -165,14 +159,11 @@ def main():
         test_item = mapped_items[-1]
         valid_item = mapped_items[-2]
 
-        # train은 항상 앞의 것들
         for iid in mapped_items[:-2]:
             train_pairs.append((uid, iid))
 
-        # valid/test는 일단 후보로만 저장
         eval_candidates.append((uid, valid_item, test_item))
 
-    # 6. global train item set 기준으로 cold 제거
     train_pairs.sort()
     train_items = {iid for _, iid in train_pairs}
 
@@ -186,7 +177,6 @@ def main():
     valid_pairs.sort()
     test_pairs.sort()
 
-    # cold ratio 계산 (이제 이론상 0이어야 함)
     cold_valid = sum(1 for _, iid in valid_pairs if iid not in train_items)
     cold_test = sum(1 for _, iid in test_pairs if iid not in train_items)
     total_eval = len(valid_pairs) + len(test_pairs)
@@ -196,7 +186,6 @@ def main():
     print("train/valid/test sizes:", len(train_pairs), len(valid_pairs), len(test_pairs))
     print(f"eval cold pairs: {cold_valid + cold_test}/{total_eval} ({cold_ratio:.4f})")
 
-    # 7. dump
     dump_pairs(DATA_ROOT / "train.txt", train_pairs)
     dump_pairs(DATA_ROOT / "valid.txt", valid_pairs)
     dump_pairs(DATA_ROOT / "test.txt", test_pairs)
