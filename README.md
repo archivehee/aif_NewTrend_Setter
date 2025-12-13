@@ -46,6 +46,4 @@ python main.py \
   --layer 3 \
   --lr 0.001
 
-[TEST] {'hr': array([0.17342227, 0.29604926]), 'ndcg': array([0.09022834, 0.12088627])}
-
 [Experiment : Ours]
